@@ -1,0 +1,19 @@
+# Companies to monitor. `source` must be one of: greenhouse, lever, ashby.
+# `board_token` is the identifier that ATS uses in its public API/job board
+# URL for this company (e.g. the "gitlab" in boards.greenhouse.io/gitlab).
+#
+# These three are still the placeholder test companies from slices 1-3, not
+# a real watchlist yet — swap them for actual NYC tech companies you're
+# targeting.
+
+- name: GitLab
+  source: greenhouse
+  board_token: gitlab
+
+- name: Palantir
+  source: lever
+  board_token: palantir
+
+- name: Linear
+  source: ashby
+  board_token: linear
