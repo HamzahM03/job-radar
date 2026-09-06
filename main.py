@@ -1,3 +1,4 @@
+from db import get_connection, has_seen, save_job
 from fetchers import ashby, greenhouse, lever
 
 # Hardcoded for now — slice 4 moves this into a companies.yaml config file.
@@ -16,14 +17,24 @@ FETCH_BY_SOURCE = {
 
 
 def main() -> None:
+    conn = get_connection()
+
     for source, board_token in COMPANIES:
         fetch_jobs = FETCH_BY_SOURCE[source]
         jobs = fetch_jobs(board_token)
-        print(f"Fetched {len(jobs)} jobs from {source}/{board_token}:\n")
+        new_count = 0
+
         for job in jobs:
-            print(f"[{job.external_id}] {job.title} - {job.location}")
+            if has_seen(conn, job.source, job.external_id):
+                continue
+            save_job(conn, job)
+            new_count += 1
+            print(f"[NEW] {job.title} - {job.location}")
             print(f"  {job.url}")
-        print()
+
+        print(f"{source}/{board_token}: {len(jobs)} fetched, {new_count} new\n")
+
+    conn.close()
 
 
 if __name__ == "__main__":
