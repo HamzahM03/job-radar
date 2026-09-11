@@ -10,17 +10,26 @@ def fetch_jobs(board_token: str, company_name: str) -> list[JobPosting]:
     response.raise_for_status()
     data = response.json()
 
-    return [
-        JobPosting(
-            source="ashby",
-            external_id=str(job["id"]),
-            title=job["title"],
-            # company_name is passed in explicitly (from companies.yaml)
-            # because Ashby's API doesn't include a company display name
-            # in the payload at all.
-            company=company_name,
-            location=job["location"],
-            url=job["jobUrl"],
+    jobs = []
+    for job in data["jobs"]:
+        try:
+            description = str(job["descriptionPlain"]) if job.get("descriptionPlain") else None
+        except Exception as e:
+            print(f"  [WARN] ashby/{board_token}: couldn't parse description for job {job.get('id')}: {e}")
+            description = None
+
+        jobs.append(
+            JobPosting(
+                source="ashby",
+                external_id=str(job["id"]),
+                title=job["title"],
+                # company_name is passed in explicitly (from companies.yaml)
+                # because Ashby's API doesn't include a company display name
+                # in the payload at all.
+                company=company_name,
+                location=job["location"],
+                url=job["jobUrl"],
+                description=description,
+            )
         )
-        for job in data["jobs"]
-    ]
+    return jobs

@@ -9,3 +9,4 @@ class JobPosting:
     company: str
     location: str
     url: str
+    description: str | None = None
