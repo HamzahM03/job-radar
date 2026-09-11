@@ -1,0 +1,35 @@
+# Trimmed ML/MLOps titles for now — resume doesn't back them up yet (no
+# PyTorch, no model training/deployment experience). Add back once that
+# changes.
+
+target_titles:
+  - software engineer
+  - backend engineer
+  - backend developer
+  - full stack engineer
+  - data engineer
+  - software developer
+  - new grad
+
+reject_title_terms:
+  - senior
+  - staff
+  - principal
+  - manager
+  - director
+  - lead
+  - frontend
+  - front end
+  - front-end
+  - ui engineer
+  - ux
+
+locations:
+  - new york
+  - nyc
+  - brooklyn
+  - new jersey
+  - nj
+  - remote
+
+max_years_experience: 2
